@@ -28,8 +28,7 @@ class ClienteRequest extends FormRequest
             'email'                 => 'required|string|email||unique:clientes',
             'whatsapp'              => 'required|',
             'direccion'             => 'required|string',
-            'celebracion_cliente'   => 'required',
-            'fecha'                 => 'date',
+            'celebraciones_cliente'   => 'required',
         ];
     }
 
@@ -37,7 +36,7 @@ class ClienteRequest extends FormRequest
     {
         return [
             'email.unique'    => 'El E-Mail Introducido ya está registrado.',
-            'celebracion_cliente.required'    => 'Debe agregar por lo menos una Celebración.',
+            'celebraciones_cliente.required'    => 'Debe agregar por lo menos una Celebración.',
         ];
     }
 }

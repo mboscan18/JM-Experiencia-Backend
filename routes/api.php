@@ -60,13 +60,16 @@ Route::get('celebracion', 'CelebracionController@index');
 
 Route::middleware(['auth:api'])->group(function () {
 	Route::get('mesas_active', 'MesaController@indexActive');
+	Route::get('historial_mesas/{fecha}', 'MesaController@historialMesas');
+	Route::get('historial_mesas_headers/{fecha}', 'MesaController@historialMesasHeaders');
+	
 	Route::get('mesas_cliente/{id}', 'MesaController@mesas_cliente');
 	Route::get('fotos_mesa/{id}', 'FotoMesaController@fotosMesa');
 	Route::get('clientes_mesa/{id}', 'ClienteMesaController@clientesMesa');
 	Route::get('celebraciones_mesa/{id}', 'CelebracionMesaController@celebracionesMesa');
-	Route::get('historial_mesas', 'MesaController@historialMesas');
 	Route::get('clientes_mesa_check/{id}', 'ClienteMesaController@clientesMesaCheck');
 	Route::get('celebraciones_mesa_check/{id}', 'CelebracionMesaController@celebracionesMesaCheck');
+	
 });
 
 /*

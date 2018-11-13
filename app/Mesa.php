@@ -42,6 +42,26 @@ class Mesa extends Model
         return $data[0]->is_mesa_abierta;    
     }
 
+    public static function mesasByFecha($num_mesa, $fecha)
+    {
+         $data = DB::table('mesas')
+             ->select('*')
+             ->where('num_mesa', $num_mesa)
+             ->whereDate('apertura', $fecha)
+             ->orderBy('apertura')
+             ->get();
+
+          $response = array();
+          $i = 0;
+          foreach ($data as $key) {
+                $mesa = Mesa::find($key->id);
+               $response[$i] = $mesa;
+               $i++;
+          }   
+
+          return $response;    
+    }
+
   	  /**
 	  *     Foreign Keys functions
 	  **/

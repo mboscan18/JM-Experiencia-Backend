@@ -92,22 +92,57 @@ class MesaController extends Controller
 
         return response()->json($response);
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function historialMesas()
+    public function mesasByNumeroArray($num_mesa, $fecha)
+    {
+        $mesa = Mesa::mesasByFecha($num_mesa, $fecha);
+                    
+       // $mesa = Mesa::mesasByFecha($num_mesa, $fecha);
+        $response = array();
+        $i=0;
+        foreach ($mesa as $key) {
+            $response[$i]['id']           = $key->id;
+            $response[$i]['num_mesa']     = $key->num_mesa;
+            $response[$i]['apertura']     = $key->apertura;
+            $response[$i]['clausura']     = $key->clausura;
+            $response[$i]['etiqueta']     = $key->etiqueta;
+            $response[$i]['cant_correos_mesa']        = sizeof($key->correos);
+            $response[$i]['cant_fotos_mesa']          = sizeof($key->fotos_mesa);
+            $response[$i]['cant_clientes_mesa']       = sizeof($key->clientes_mesa);
+            $response[$i]['cant_celebraciones_mesa']  = sizeof($key->celebraciones_mesa);
+            $i++;
+        }
+
+        return $response;
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function historialMesas($fecha)
     {
         $num_total_mesas = Dato::getNumTotalMesas();
         $response = array();
-        for ($i=1; $i <= $num_total_mesas; $i++) { 
-            $response[$i]['num_mesa']     = $i;
-            $response[$i]['mesas']        = $this->mesasByNumero($i);
+        for ($i=0; $i < $num_total_mesas; $i++) { 
+            $mesas = $this->mesasByNumeroArray($i+1, $fecha);
+            $response[$i]['num_mesa']     = $i+1;
+            $response[$i]['cant_mesas']   = sizeof($mesas);
+            if(sizeof($mesas) > 0)
+                $response[$i]['estatus']        = 'aperturada';
+            else
+                $response[$i]['estatus']        = 'cerrada';
+            $response[$i]['mesas']        = $mesas;
         }
 
-        return response()->json($response);
+        return $response;
     }
+
 
 
     /**

@@ -36,7 +36,8 @@ class ClienteController extends Controller
             $response[$i]['id']          = $key->id;
             $response[$i]['fecha']       = $key->fecha;
             $response[$i]['cliente_id']  = $key->cliente_id;
-            $response[$i]['celebracion'] = $key->celebracion;
+            $response[$i]['celebracion_id'] = $key->celebracion->id;
+            $response[$i]['celebracion_descripcion'] = $key->celebracion->descripcion;
             $i++;
         }
 
